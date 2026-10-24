@@ -1,0 +1,52 @@
+{
+  "caption_model": "qwen2.5vl:7b",
+  "reasoning_model": "gemma3:12b",
+  "n_reference": 30,
+  "seed": 2024,
+  "mode": "mustard",
+  "modalities": [
+    "raw",
+    "trajectory",
+    "flow"
+  ],
+  "options": {
+    "caption": {
+      "num_predict": 1024
+    },
+    "plot": {
+      "temperature": 0.2,
+      "num_ctx": 8192
+    },
+    "pattern": {
+      "num_ctx": 65536
+    },
+    "reasoning": {
+      "num_ctx": 65536
+    },
+    "fusion": {
+      "num_ctx": 8192,
+      "num_predict": 1024
+    },
+    "baseline": {
+      "num_ctx": 65536
+    }
+  },
+  "keyframes": {
+    "method": "uniform",
+    "frame_num": 8,
+    "agg": "mean",
+    "smooth_win": 8,
+    "min_dist": 4,
+    "num_peaks": 3,
+    "num_valleys": 2,
+    "shoulder_rel": 0.5,
+    "min_prom_frac": 0.02,
+    "priority": [
+      "start_end",
+      "peaks",
+      "valleys",
+      "shoulders",
+      "midpoints"
+    ]
+  }
+}

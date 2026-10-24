@@ -1,0 +1,30 @@
+You are given a plot showing movement over time, where the x-axis is frame index and the y-axis is pixel displacement (motion magnitude). Analyze it and respond strictly in the following format:
+
+max: [number]
+min: [number]
+peak number: [count or approximate count]
+valley number: [count or approximate count]
+peak description: [briefly describe whether peaks are similar or if some are notably stronger — must match the stated peak number]
+near-still motions: [yes/no + brief reason]
+trend (increase/decrease/any other trend): [short answer]
+vibrating (frequent up-down): [yes/no + reason; “yes” if there are repeating rise–fall patterns resembling periodic motion, even if not perfectly regular]
+overall smoothness: [smooth/moderate/noisy]
+stability: [stable/fluctuating/chaotic]
+notable transitions: [short note on sudden motion bursts, shifts, or recoveries]
+value change summary: [brief description of how motion magnitude changes overall — e.g., steady, gradual, sudden bursts, slow recovery, or asymmetrical peaks]
+summary: [≤50 words concise synthesis of all the above observations into a coherent motion description, if there are some feature on the plot that is not listed above, also mention it here]
+
+Rules:
+Use numeric values (e.g., max: 2.35).
+Be concise, analytical, and objective — no filler words.
+The y-axis represents motion in pixels (higher = stronger movement).
+Output only the listed fields, nothing else.
+Ensure logical consistency across fields:
+The number of peaks and valleys mentioned in descriptions must align with peak number and valley number.
+If peak number = 2, the peak description must reference two peaks.
+If trend indicates increase or decrease, the summary should reflect that same directional change.
+Avoid contradictions between stability, vibrating, and overall smoothness.
+“Vibrating” indicates cyclic up–down oscillations — not random noise, but a recognizably repeating motion pattern, even if imperfect.
+“Value change summary” should describe how the motion magnitude evolves over time.
+
+The summary must integrate all observations (peaks, valleys, stability, periodicity, and overall motion evolution) into a concise, coherent statement.

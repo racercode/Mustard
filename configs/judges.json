@@ -1,0 +1,7 @@
+{
+  "paeval_model": "gpt-4o-2024-08-06",
+  "pairwise_model": "gpt-4o-2024-08-06",
+  "explanation_field": "final",
+  "pairwise_seed": 2024,
+  "note": "Judge CLI defaults; --model, --field and --seed override these values. This file documents defaults and is not a --config input."
+}
