@@ -13,7 +13,7 @@ research directory or Git HEAD as the authoritative version for every experiment
 | Pairwise judge | GPT-4o, explicitly confirmed by the project owner; the legacy GPT-5 default is not retained |
 | Pairwise alignment | Explicit video IDs and recorded answer-order seed |
 | Normal labels | Explicit manifest labels, with norm/normal/good/anomaly_free indexing aliases |
-| External preprocessing | Tracks, trajectory videos and plots are provided by another component |
+| Optical-flow preprocessing | Optional integrated TV-L1 command derived from the local OpticalFlow source; compatible external artifacts remain supported |
 | IPAD | Deferred from this release |
 
 Send-Physics-AD is a Phys-AD baseline benchmark fork with custom PAEval additions,

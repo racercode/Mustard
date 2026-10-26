@@ -1,4 +1,4 @@
-"""Inspect external preprocessing without running a model."""
+"""Inspect preprocessing artifacts without running a model."""
 import cv2
 import numpy as np
 

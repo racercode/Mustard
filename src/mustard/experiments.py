@@ -26,7 +26,7 @@ def run_experiment(records, config, work, host):
     write_json(work / 'manifest.json', records)
     write_json(work / 'config.json', pipeline.config)
     runtime = dict(python=sys.version, platform=platform.platform(), model_endpoint=host, packages={})
-    for package in ('numpy', 'scipy', 'opencv-python-headless', 'mustard-vad'):
+    for package in ('numpy', 'scipy', 'opencv-contrib-python-headless', 'mustard-vad'):
         try:
             runtime['packages'][package] = version(package)
         except PackageNotFoundError:

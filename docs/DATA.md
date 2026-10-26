@@ -44,12 +44,16 @@ The recovered PAEval format maps each object to `description_label` and
 `explanation_label`. Each maps anomaly subtypes to a list of reference texts.
 These are external annotations, not source code, and are not included here.
 
-## External preprocessing handoff
+## Optical-flow preprocessing handoff
 
-The provider supplies all four inputs with frame-preserving correspondence.
+`mustard preprocess-optical-flow` can generate the tracks, trajectory videos, and
+plots from the raw Phys-AD tree. Alternatively, an external provider may supply
+all four inputs with frame-preserving correspondence.
 Keyframe selection never uses the plot PNG to infer indices; it computes the motion
 curve from the numeric tracks. The plot is independently consumed by the caption
-model. Grid density, optical-flow estimation parameters, arrow rendering and plot
-rendering settings remain the provider's responsibility.
+model. The built-in command exposes grid density, TV-L1 working resolution, arrow
+rendering, motion aggregation, and plot smoothing options without changing the
+downstream pipeline. The tracks root also contains `preprocessing.json`, which
+records those options and prevents accidental reuse under a different configuration.
 
 Normal-directory aliases determine binary labels; they do not rename anomaly subtypes. Explanation reference libraries must use the manifest's actual object/anomaly names, or be explicitly mapped before judging.

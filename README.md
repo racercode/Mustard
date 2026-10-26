@@ -11,11 +11,12 @@ validation limits are documented rather than claiming reproduced paper scores.
 
 This release targets Phys-AD. IPAD experiments are deferred and will be added later.
 
-External preprocessing supplies raw videos, trajectory videos with arrows already
-rendered, optical-flow tracks, and flow-magnitude plot images. This repository
-selects keyframes, extracts aligned raw/trajectory frames, generates descriptions,
+The optional optical-flow preprocessor generates trajectory videos with arrows,
+numeric tracks, and flow-magnitude plot images from raw Phys-AD videos. This repository
+then selects keyframes, extracts aligned raw/trajectory frames, generates descriptions,
 extracts normal patterns, performs reasoning/fusion, and evaluates predictions.
-Tracking, arrow rendering, and plot generation are maintained separately.
+The preprocessor is isolated from training and inference and may also be replaced
+with compatible external artifacts.
 
 No datasets, model weights, generated patterns, predictions, or experiment results
 are included. Keep all working artifacts outside this repository.
@@ -58,6 +59,23 @@ Start with the [quick start](docs/QUICKSTART.md). Full commands and reconstructe
 comparison recipes are listed in [EXPERIMENTS.md](docs/EXPERIMENTS.md).
 
 ## Prepare inputs
+
+Install plotting support and generate the optical-flow artifacts when starting
+from raw Phys-AD videos:
+
+```bash
+python -m pip install -e '.[preprocessing]'
+
+mustard preprocess-optical-flow \
+  --raw-root /data/raw --tracks-root /data/tracks \
+  --trajectory-root /data/trajectory --plots-root /data/plots
+```
+
+The command mirrors the raw dataset tree, skips completed outputs by default, and
+uses TV-L1 with an 80-by-50 full-frame grid. It records preprocessing options in
+`tracks-root/preprocessing.json` and refuses to mix changed settings unless
+`--overwrite` is supplied. It does not invoke models or modify any
+training/inference artifacts.
 
 The default indexer expects four parallel directory trees:
 

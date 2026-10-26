@@ -43,7 +43,7 @@ sequences. CLI integration checks use real synthetic videos and mocked HTTP resp
 
 ## Current release scope
 
-The current release targets Phys-AD. IPAD support and its paper experiment are deferred by the project owner; they are not a blocker for completing this release. External optical-flow/tracks/trajectory-video/plot generation also remains outside this repository.
+The current release targets Phys-AD. IPAD support and its paper experiment are deferred by the project owner; they are not a blocker for completing this release. An isolated optional command now generates the optical-flow tracks, trajectory videos, and plots; compatible externally generated artifacts remain supported.
 
 ## Remaining paper coverage
 
@@ -51,7 +51,7 @@ The current release targets Phys-AD. IPAD support and its paper experiment are d
 - IPAD is explicitly deferred by the project owner and is outside the current release scope. Its dataset mapping and official splits will be integrated later.
 - Modality and selection recipes are implemented and tested offline. They are reconstructed recipes; the original commands cannot be recovered.
 - External baseline integration is documented with an ID-preserving importer; their model/checkpoint execution remains in the original implementations.
-- Clarify the license of the extracted OpticalFlow selection code before public release.
+- Clarify the license of the derived OpticalFlow preprocessing and selection code before public release.
 
 The upstream keyframe source has no LICENSE file in the local checkout. A source
 notice is included; no license is invented for that code or the final project.

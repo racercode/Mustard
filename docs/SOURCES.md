@@ -5,7 +5,11 @@ Keyframe selection derives from `cswagger/OpticalFlow`, local commit
 Original file SHA-256: `62c68c6dacb5236cfcdabe8a04c3525d6c0c239bf3c4cb316054140dcb561295`.
 The selection functions are extracted without the old command-line, plotting,
 or filesystem code. SciPy is required instead of using the silent peak-finder fallback.
-No tracking, optical-flow plotting, or trajectory rendering is included.
+The optical-flow integration derives its TV-L1 grid tracking from
+`OpticalFlow/tracker.py`, motion plotting from `OpticalFlow/clean_motion.py`, and
+trajectory rendering from `OpticalFlow/visualize_new.py`, at the same local commit.
+Hard-coded filesystem paths, experimental artifacts, mask-only branches, model
+captioning scripts, and unrelated keyframe command lines are not included.
 
 The local upstream checkout has no LICENSE file. Upstream licensing must be
 clarified before public release; this draft does not assert a license for that code.

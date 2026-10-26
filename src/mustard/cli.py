@@ -9,6 +9,7 @@ from .keyframes import prepare
 from .judging import export_paeval, aggregate_paeval, run_paeval, run_pairwise
 from .judge_client import Judge
 from .model import Ollama
+from .optical_flow import preprocess_dataset
 from .pipeline import Pipeline
 from .scoring import evaluate
 from .storage import write_json
@@ -29,6 +30,28 @@ def main():
         index.add_argument(f'--{name}-root', required=True, type=Path)
     index.add_argument('--normal-names', nargs='+', default=['norm', 'normal', 'good', 'anomaly_free'])
     index.add_argument('--out', required=True, type=Path)
+    optical_flow = sub.add_parser('preprocess-optical-flow', help='generate TV-L1 tracks, trajectory videos, and motion plots')
+    optical_flow.add_argument('--raw-root', required=True, type=Path)
+    optical_flow.add_argument('--tracks-root', required=True, type=Path)
+    optical_flow.add_argument('--trajectory-root', required=True, type=Path)
+    optical_flow.add_argument('--plots-root', required=True, type=Path)
+    optical_flow.add_argument('--grid-columns', type=int, default=80)
+    optical_flow.add_argument('--grid-rows', type=int, default=50)
+    optical_flow.add_argument('--max-dim', type=int, default=640)
+    optical_flow.add_argument('--aggregation', choices=['median', 'mean', 'sum'], default='median')
+    optical_flow.add_argument('--smooth-window', type=int, default=7)
+    optical_flow.add_argument('--overlay-points', type=int, default=50)
+    optical_flow.add_argument('--top-pool', type=int, default=500)
+    optical_flow.add_argument('--force-top', type=int, default=10)
+    optical_flow.add_argument('--trail-length', type=int, default=10)
+    optical_flow.add_argument('--arrow-max-fraction', type=float, default=0.08)
+    optical_flow.add_argument('--reference-percentile', type=float, default=95)
+    optical_flow.add_argument('--min-visible-step-fraction', type=float, default=0.0005)
+    optical_flow.add_argument('--visibility-hysteresis', type=float, default=0.25)
+    optical_flow.add_argument('--visibility-warmup', type=int, default=2)
+    optical_flow.add_argument('--visibility-cooldown', type=int, default=2)
+    optical_flow.add_argument('--visibility-ema', type=float, default=0.25)
+    optical_flow.add_argument('--overwrite', action='store_true')
     for command in ('train', 'infer', 'experiment'):
         task = sub.add_parser(command, help={'train': 'extract normal patterns', 'infer': 'run test inference', 'experiment': 'run induction, inference, and AUROC for one recipe'}[command])
         task.add_argument('--manifest', required=True, type=Path)
@@ -83,6 +106,21 @@ def main():
             return
         if args.command == 'index':
             result = index_dataset(args.raw_root, args.trajectory_root, args.tracks_root, args.plots_root, args.normal_names)
+        elif args.command == 'preprocess-optical-flow':
+            result = preprocess_dataset(
+                args.raw_root, args.tracks_root, args.trajectory_root, args.plots_root,
+                columns=args.grid_columns, rows=args.grid_rows, max_dim=args.max_dim,
+                aggregation=args.aggregation, smooth_window=args.smooth_window,
+                point_count=args.overlay_points, pool_size=args.top_pool, force_count=args.force_top,
+                trail_length=args.trail_length, arrow_max_fraction=args.arrow_max_fraction,
+                reference_percentile=args.reference_percentile,
+                min_visible_step_fraction=args.min_visible_step_fraction,
+                visibility_hysteresis=args.visibility_hysteresis,
+                visibility_warmup=args.visibility_warmup,
+                visibility_cooldown=args.visibility_cooldown,
+                visibility_ema=args.visibility_ema, overwrite=args.overwrite)
+            print(json.dumps(result))
+            return
         elif args.command in ('paeval', 'pairwise'):
             judge = Judge(args.work / 'judge_calls', model=args.model, base_url=args.base_url)
             predictions = json.loads(args.predictions.read_text())['predictions']

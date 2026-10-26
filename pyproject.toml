@@ -8,7 +8,10 @@ version = "0.1.0"
 readme = "README.md"
 description = "MUSTARD: spatiotemporal dynamics-aware industrial video anomaly detection"
 requires-python = ">=3.10"
-dependencies = ["numpy>=1.24", "scipy>=1.10", "opencv-python-headless>=4.8"]
+dependencies = ["numpy>=1.24", "scipy>=1.10", "opencv-contrib-python-headless>=4.8"]
+
+[project.optional-dependencies]
+preprocessing = ["matplotlib>=3.7"]
 
 [project.scripts]
 mustard = "mustard.cli:main"

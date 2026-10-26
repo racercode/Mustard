@@ -1,14 +1,19 @@
 # Quick start
 
-1. Install the package from the repository root:
+1. Install the package from the repository root. Include the preprocessing
+   extra when generating optical-flow artifacts locally:
 
    ```bash
-   python -m pip install -e .
+   python -m pip install -e '.[preprocessing]'
    ```
 
-2. Obtain the external preprocessing inputs and index them:
+2. Generate or obtain the preprocessing inputs, then index them:
 
    ```bash
+   mustard preprocess-optical-flow \
+     --raw-root /data/raw --tracks-root /data/tracks \
+     --trajectory-root /data/trajectory --plots-root /data/plots
+
    mustard index --raw-root /data/raw --trajectory-root /data/trajectory \
      --tracks-root /data/tracks --plots-root /data/plots \
      --out /work/physad/manifest.json
